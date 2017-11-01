@@ -23,11 +23,11 @@ from travel.views import TravelViewSet
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'travel', TravelViewSet)
+router.register(r'travels', TravelViewSet)
 
 urlpatterns = [
     # Django API
-    url(r'^', include(router.urls)),
+    url(r'^api/', include(router.urls, namespace='api')),
 
     # Django JET URLS
     url(r'^jet/', include('jet.urls', 'jet')),
