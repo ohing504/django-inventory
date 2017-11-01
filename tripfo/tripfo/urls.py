@@ -17,8 +17,15 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from rest_framework import routers, serializers, viewsets
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
 
 urlpatterns = [
+    # Django API
+    url(r'^', include(router.urls)),
+
     # Django JET URLS
     url(r'^jet/', include('jet.urls', 'jet')),
     # Django JET dashboard URLS
