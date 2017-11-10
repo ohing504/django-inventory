@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # local django apps
+    'inventory',
 ]
 
 MIDDLEWARE = [
