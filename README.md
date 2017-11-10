@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/tripfo/tripfo-api.svg?branch=master,develop)](https://travis-ci.org/tripfo/tripfo-api)
+[![Build Status](https://travis-ci.org/ohing504/django-inventory.svg?branch=master,develop)](https://travis-ci.org/ohing504/django-inventory)
 
-# Tripfo API server
+# Django Inventory
 
-Tripfo API server
+Django Inventory
 
