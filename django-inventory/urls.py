@@ -17,13 +17,10 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from rest_framework import routers, serializers, viewsets
-
-from travel.views import TravelViewSet
+from rest_framework import routers
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'travels', TravelViewSet)
 
 urlpatterns = [
     # Django API

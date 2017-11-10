@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # local django apps
-    'travel.apps.TravelConfig',
 ]
 
 MIDDLEWARE = [
