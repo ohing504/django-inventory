@@ -16,6 +16,7 @@ def import_transaction(transaction_data, filename):
     category = None
     for data in dataset:
         try:
+            int(data['No.'])
             if data['대분류'] != '':
                 category, created = Category.objects.get_or_create(name=data['대분류'])
             price = int(data['총매출액']) / int(data['수량'])
