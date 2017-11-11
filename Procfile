@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn inventory.wsgi --log-file -
+web: gunicorn django-inventory.wsgi --log-file -
