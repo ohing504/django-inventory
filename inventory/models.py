@@ -80,7 +80,6 @@ class Transaction(models.Model):
 
 @receiver(post_delete, sender=Transaction)
 def transaction_post_delete(sender, instance, *args, **kwargs):
-    print('delete', instance)
     if instance.type == 'BUY':
         instance.merchandise.quantity -= instance.quantity
     else:
