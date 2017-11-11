@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 
@@ -43,7 +43,9 @@ class Merchandise(models.Model):
 class Transaction(models.Model):
     merchandise = models.ForeignKey(Merchandise)
     quantity = models.IntegerField(_('Quantity'), default=0)
+    prev_quantity = models.IntegerField(_('Prev Quantity'), blank=True, null=True)
     date = models.DateField(_('Transaction Date'))
+    note = models.CharField(_('Note'), max_length=255, blank=True, null=True)
 
     transaction_data = models.ForeignKey('administrator.TransactionData', blank=True, null=True)
 
@@ -64,10 +66,14 @@ class Transaction(models.Model):
         return '[{}:{}] {}: {}'.format(self.date, type_str, self.merchandise, abs(self.quantity))
 
     def save(self, *args, **kwargs):
-        super(Transaction, self).save(*args, **kwargs)
+        if self.pk is None:
+            self.prev_quantity = 0
 
-        self.merchandise.quantity += self.quantity
+        self.merchandise.quantity += self.quantity - self.prev_quantity
         self.merchandise.save()
+
+        self.prev_quantity = self.quantity
+        super(Transaction, self).save(*args, **kwargs)
 
 
 @receiver(post_delete, sender=Transaction)

@@ -33,6 +33,7 @@ class MerchandiseAdminAction(admin.ModelAdmin):
 class MerchandiseAdmin(MerchandiseAdminAction):
     list_display = ['code', 'category', 'name', 'quantity', 'formatted_price']
     list_filter = ['category']
+    readonly_fields = ['quantity']
 
     class Media:
         css = {
@@ -46,8 +47,9 @@ class MerchandiseAdmin(MerchandiseAdminAction):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'merchandise', 'quantity', 'date', 'create_user']
+    list_display = ['merchandise', 'quantity', 'date', 'create_user']
     list_filter = ('merchandise', ('date', DateRangeFilter))
+    fields = ['merchandise', 'quantity', 'date', 'note', 'transaction_data', 'create_user']
     readonly_fields = ['create_user']
 
     def save_model(self, request, obj, form, change):
