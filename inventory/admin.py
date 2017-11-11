@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from jet.filters import DateRangeFilter
 
 from inventory.models import Merchandise, Category, Transaction
@@ -23,8 +23,11 @@ class MerchandiseAdminAction(admin.ModelAdmin):
 
     @short_description('선택한 상품의 수량 초기화')
     def init_quantity(self, request, queryset):
-        queryset.update(quantity=0)
-        self.message_user(request, 'Successfully initialize quantity as 0.')
+        if request.user.is_superuser:
+            queryset.update(quantity=0)
+            self.message_user(request, 'Successfully initialize quantity as 0.', level=messages.SUCCESS)
+        else:
+            self.message_user(request, "You don't have permission.", level=messages.ERROR)
 
     actions = [init_quantity]
 
