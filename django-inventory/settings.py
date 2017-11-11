@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # local django apps
+    'administrator',
     'inventory',
 ]
 
@@ -137,6 +138,9 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

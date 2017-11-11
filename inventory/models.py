@@ -32,7 +32,7 @@ class Merchandise(models.Model):
     class Meta:
         verbose_name = _('Merchandise')
         verbose_name_plural = _('Merchandises')
-        ordering = ['code']
+        ordering = ['category', 'code']
 
     def __str__(self):
         return self.name
@@ -51,6 +51,8 @@ class Transaction(models.Model):
     type = models.CharField(_('Type'), max_length=15, choices=TYPE_CHOICES, default=TYPE_BUY)
     quantity = models.IntegerField(_('Quantity'))
     date = models.DateField(_('Transaction Date'))
+
+    transaction_data = models.ForeignKey('administrator.TransactionData', blank=True, null=True)
 
     created_by = models.ForeignKey(User, editable=False, null=True)
     created_at = models.DateTimeField(_('Created'), auto_now_add=True)
