@@ -1,0 +1,5 @@
+/* CHANGELIST TABLES */
+
+#changelist table tbody td.field-formatted_price {
+  text-align: right;
+}

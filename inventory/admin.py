@@ -21,7 +21,17 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Merchandise)
 class MerchandiseAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['code', 'category', 'name', 'formatted_price']
+    list_filter = ['category']
+
+    class Media:
+        css = {
+            'all': ('admin/css/admin.css',)
+        }
+
+    @short_description('price')
+    def formatted_price(self, obj):
+        return '{:,} 원'.format(obj.price)
 
 
 @admin.register(Transaction)
