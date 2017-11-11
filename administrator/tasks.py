@@ -25,7 +25,6 @@ def import_transaction(transaction_data, filename):
                                                                          'name': data['상품명'],
                                                                          'category': category,
                                                                          'price': price,
-                                                                         'quantity': 0,
                                                                      })
 
             Transaction.objects.create(merchandise=merchandise,

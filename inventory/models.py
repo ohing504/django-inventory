@@ -49,7 +49,7 @@ class Transaction(models.Model):
 
     merchandise = models.ForeignKey(Merchandise)
     type = models.CharField(_('Type'), max_length=15, choices=TYPE_CHOICES, default=TYPE_BUY)
-    quantity = models.IntegerField(_('Quantity'))
+    quantity = models.IntegerField(_('Quantity'), default=0)
     date = models.DateField(_('Transaction Date'))
 
     transaction_data = models.ForeignKey('administrator.TransactionData', blank=True, null=True)
