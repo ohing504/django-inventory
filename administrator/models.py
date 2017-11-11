@@ -30,4 +30,4 @@ class TransactionData(models.Model):
 @receiver(post_save, sender=TransactionData)
 def do_import(sender, instance, created, **kwargs):
     if created:
-        import_transaction(instance, instance.file.path)
+        import_transaction(instance, instance.file)

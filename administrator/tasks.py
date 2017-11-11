@@ -1,9 +1,23 @@
+import tempfile
+
+import requests
 import xlrd
+from requests.exceptions import MissingSchema
 
 from inventory.models import Category, Merchandise, Transaction
 
 
-def import_transaction(transaction_data, filename):
+def import_transaction(transaction_data, file):
+    # get file path
+    try:
+        temp_file = tempfile.NamedTemporaryFile()
+        temp_file.write(requests.get(file.url).content)
+        temp_file.flush()
+        filename = temp_file.name
+    except MissingSchema:
+        filename = file.path
+
+    # read the excel file
     try:
         book = xlrd.open_workbook(filename=filename)
         sheet = book.sheet_by_index(0)
