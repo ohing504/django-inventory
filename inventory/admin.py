@@ -19,9 +19,19 @@ class CategoryAdmin(admin.ModelAdmin):
     pass
 
 
+class MerchandiseAdminAction(admin.ModelAdmin):
+
+    @short_description('선택한 상품의 수량 초기화')
+    def init_quantity(self, request, queryset):
+        queryset.update(quantity=0)
+        self.message_user(request, 'Successfully initialize quantity as 0.')
+
+    actions = [init_quantity]
+
+
 @admin.register(Merchandise)
-class MerchandiseAdmin(admin.ModelAdmin):
-    list_display = ['code', 'category', 'name', 'formatted_price']
+class MerchandiseAdmin(MerchandiseAdminAction):
+    list_display = ['code', 'category', 'name', 'quantity', 'formatted_price']
     list_filter = ['category']
 
     class Media:
