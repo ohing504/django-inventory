@@ -43,8 +43,7 @@ def import_transaction(transaction_data, file):
                                                                      })
 
             Transaction.objects.create(merchandise=merchandise,
-                                       type='SELL',
-                                       quantity=int(data['수량']),
+                                       quantity=int(data['수량']) * -1,
                                        date=transaction_data.date,
                                        transaction_data=transaction_data)
         except ValueError:

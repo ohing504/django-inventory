@@ -41,16 +41,7 @@ class Merchandise(models.Model):
 
 
 class Transaction(models.Model):
-    TYPE_BUY = 'BUY'
-    TYPE_SELL = 'SELL'
-
-    TYPE_CHOICES = (
-        (TYPE_BUY, _('Buy')),
-        (TYPE_SELL, _('Sell')),
-    )
-
     merchandise = models.ForeignKey(Merchandise)
-    type = models.CharField(_('Type'), max_length=15, choices=TYPE_CHOICES, default=TYPE_BUY)
     quantity = models.IntegerField(_('Quantity'), default=0)
     date = models.DateField(_('Transaction Date'))
 
@@ -66,22 +57,20 @@ class Transaction(models.Model):
         ordering = ['-date', '-id']
 
     def __str__(self):
-        return '[{}:{}] {}: {}'.format(self.date, self.type, self.merchandise, self.quantity)
+        if self.quantity > 0:
+            type_str = 'Buy'
+        else:
+            type_str = 'Sell'
+        return '[{}:{}] {}: {}'.format(self.date, type_str, self.merchandise, abs(self.quantity))
 
     def save(self, *args, **kwargs):
         super(Transaction, self).save(*args, **kwargs)
 
-        if self.type == 'BUY':
-            self.merchandise.quantity += self.quantity
-        else:
-            self.merchandise.quantity -= self.quantity
+        self.merchandise.quantity += self.quantity
         self.merchandise.save()
 
 
 @receiver(post_delete, sender=Transaction)
 def transaction_post_delete(sender, instance, *args, **kwargs):
-    if instance.type == 'BUY':
-        instance.merchandise.quantity -= instance.quantity
-    else:
-        instance.merchandise.quantity += instance.quantity
+    instance.merchandise.quantity -= instance.quantity
     instance.merchandise.save()

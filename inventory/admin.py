@@ -46,8 +46,8 @@ class MerchandiseAdmin(MerchandiseAdminAction):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'merchandise', 'type', 'quantity', 'date', 'create_user']
-    list_filter = ('merchandise', 'type', ('date', DateRangeFilter))
+    list_display = ['id', 'merchandise', 'quantity', 'date', 'create_user']
+    list_filter = ('merchandise', ('date', DateRangeFilter))
     readonly_fields = ['create_user']
 
     def save_model(self, request, obj, form, change):
