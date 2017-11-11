@@ -50,7 +50,7 @@ class MerchandiseAdmin(MerchandiseAdminAction):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ['merchandise', 'quantity', 'date', 'create_user']
+    list_display = ['merchandise', 'quantity', 'date', 'create_user', 'note']
     list_filter = ('merchandise', ('date', DateRangeFilter))
     fields = ['merchandise', 'quantity', 'date', 'note', 'transaction_data', 'create_user']
     readonly_fields = ['create_user']
