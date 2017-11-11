@@ -31,6 +31,33 @@ class Merchandise(models.Model):
     class Meta:
         verbose_name = _('Merchandise')
         verbose_name_plural = _('Merchandises')
+        ordering = ['code']
 
     def __str__(self):
         return self.name
+
+
+class Transaction(models.Model):
+    TYPE_BUY = 'BUY'
+    TYPE_SELL = 'SELL'
+
+    TYPE_CHOICES = (
+        (TYPE_BUY, _('Buy')),
+        (TYPE_SELL, _('Sell')),
+    )
+
+    merchandise = models.ForeignKey(Merchandise)
+    type = models.CharField(_('Type'), max_length=15, choices=TYPE_CHOICES, default=TYPE_BUY)
+    quantity = models.IntegerField(_('Quantity'))
+    date = models.DateField(_('Transaction Date'))
+
+    created_at = models.DateTimeField(_('Created'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('Updated'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('Transaction')
+        verbose_name_plural = _('Transactions')
+        ordering = ['-date', '-id']
+
+    def __str__(self):
+        return '[{}:{}] {}: {}'.format(self.date, self.type, self.merchandise, self.quantity)
