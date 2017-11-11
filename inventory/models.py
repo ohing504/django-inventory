@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -65,3 +67,22 @@ class Transaction(models.Model):
 
     def __str__(self):
         return '[{}:{}] {}: {}'.format(self.date, self.type, self.merchandise, self.quantity)
+
+    def save(self, *args, **kwargs):
+        super(Transaction, self).save(*args, **kwargs)
+
+        if self.type == 'BUY':
+            self.merchandise.quantity += self.quantity
+        else:
+            self.merchandise.quantity -= self.quantity
+        self.merchandise.save()
+
+
+@receiver(post_delete, sender=Transaction)
+def transaction_post_delete(sender, instance, *args, **kwargs):
+    print('delete', instance)
+    if instance.type == 'BUY':
+        instance.merchandise.quantity -= instance.quantity
+    else:
+        instance.merchandise.quantity += instance.quantity
+    instance.merchandise.save()
