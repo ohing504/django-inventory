@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -51,6 +52,7 @@ class Transaction(models.Model):
     quantity = models.IntegerField(_('Quantity'))
     date = models.DateField(_('Transaction Date'))
 
+    created_by = models.ForeignKey(User, editable=False, null=True)
     created_at = models.DateTimeField(_('Created'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Updated'), auto_now=True)
 
