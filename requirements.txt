@@ -6,7 +6,7 @@ django-admin-rangefilter==0.3.0
 django-dropbox==0.0.2
 django-jet==1.0.6
 -e git+https://github.com/jschneier/django-storages.git@adefe324be22843148b03a2068d2922eaae1a48b#egg=django_storages
-djangorestframework==3.7.1
+djangorestframework==3.9.1
 dropbox==8.4.1
 gunicorn==19.7.1
 idna==2.6
